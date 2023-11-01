@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 
 // import { useNavigate } from 'react-router-dom';
 
-axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
+axios.defaults.baseURL = "http://0.0.0.0:8000/api/";
 const Connection = createContext();
 
 const userForm = {
@@ -83,6 +83,7 @@ export const ConnectionProvider = ({children}) => {
       const roomdata = response.data.data.id
       console.log(roomdata)
       autoinputChatroomuser(roomdata)
+      window.location.href='/home/'
     })
     // console.log(chatroomValue)
     setChatroomValue(chatroomForm)

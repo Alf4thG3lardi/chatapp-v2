@@ -10,6 +10,9 @@ const Home = () => {
     Cookies.remove('user')
     window.location.href = '/'
   }
+  const tochatroom = (room_id) => {
+    window.location.href='/home/'+room_id
+  }
 
   const {chatuser, getChatuser, getChatroomusers, chatroomusers, storeChatroom, setChatroomForm, chatroomValue} = useContext(Connection);
   const user_id = Cookies.get('user')
@@ -37,7 +40,9 @@ const Home = () => {
             {chatroomusers.filter(chatroomusers => chatroomusers.user_id == user_id).map(
               (chatroomuser) => {
                 return (
-                <li className='text-white'>{chatroomuser.name}</li>
+                <li className='text-white'>
+                  <button onClick={() => {tochatroom(chatroomuser.chatroom_id)}}>{chatroomuser.name}</button>
+                </li>
                 )
               }
             )}
