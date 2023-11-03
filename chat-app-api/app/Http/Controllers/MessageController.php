@@ -17,7 +17,7 @@ class MessageController extends Controller
         $data = DB::table('messages')
         ->join('chatusers', 'chatusers.id', '=', 'messages.user_id')
         ->select('messages.*', 'chatusers.username')
-        ->latest()
+        ->orderBy('created_at', 'asc')
         ->get();
         return response()->json([
             'data' => $data
