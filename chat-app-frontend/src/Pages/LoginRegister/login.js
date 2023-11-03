@@ -38,7 +38,7 @@ const Login = () => {
       <div>
         <h1 className="text-center" style={{ fontFamily: "Poppins", fontWeight: "900", color: "#31059A" }}>
           {" "}
-          Register Form
+          Welcome Back!
         </h1>
         <hr className="mx-auto" style={{ width: "300px", marginTop: "1px", marginBottom: "5px", borderWidth: "3px" }} />
         <p className="text-center" style={{ fontSize: "19px", fontFamily: "Poppins" }}>
@@ -49,7 +49,7 @@ const Login = () => {
             <div className="row">
               <div className="col mt-5 ms-5 pb-5 pe-4 shadow p-3 mb-5 bg-body rounded">
                 <h3 className="mt-4 text-center" style={{ fontFamily: "Roboto", fontWeight: "700" }}>
-                  SIGN UP
+                  LOGIN
                 </h3>
                 <img src={IconLogin} width={120} className="mt-3 mx-auto d-block" />
                 <form onSubmit={loginuser}>

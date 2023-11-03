@@ -14,15 +14,15 @@ const Chatroom = () => {
     getChatusers();
   }, []);
   return (
-    <div style={{ background: "#DBDDFF", minHeight: "80vh" }}>
+    <div style={{ background: "#DBDDFF", minHeight: "80vh"}}>
       {room_id ? (
         <>
           <p className="h1 mt-3 mb-3" style={{ fontFamily: "Poppins", fontWeight: "900", color: "#31059A" }}>
             {chatroom.name}
           </p>
           <form className="mx-auto d-flex justify-content-start" onSubmit={storeChatroomuser} style={{ width: "500px", marginBottom: "40px" }}>
-            <select class="form-select" name="user_id" onChange={setChatroomuserForm}>
-              <option selected>Open this select menu</option>
+            <select className="form-select" name="user_id" onChange={setChatroomuserForm}>
+              <option selected>Open this select user</option>
               {chatusers.map((chatuser) => {
                 return <option value={chatuser.id}>{chatuser.username}</option>;
               })}
@@ -60,7 +60,7 @@ const Chatroom = () => {
               <div className="col-9">
                 <input
                   type="text"
-                  class="form-control border border-secondary"
+                  className="form-control border border-secondary"
                   name="message"
                   onChange={setMessageForm}
                   value={messageValue["message"]}
@@ -69,14 +69,14 @@ const Chatroom = () => {
                 />
               </div>
               <div className="col-3" style={{ position: "relative", marginTop: "29px", paddingLeft: "60px" }}>
-                <input type="submit" className="btn btn-primary" value="Submit" />
+                <input type="submit" className="btn" value="Submit" style={{ background: "#668DDC", color:'white', borderRadius:'20px'}}/>
               </div>
             </form>
           </div>
         </>
       ) : (
         <>
-          <p className="text-white"> Chat kosong </p>
+          <p className="mt-3 text-white"> Chat kosong </p>
         </>
       )}
     </div>

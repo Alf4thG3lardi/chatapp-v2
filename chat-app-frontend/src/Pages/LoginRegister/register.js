@@ -32,7 +32,7 @@ const Register = () => {
             <div className="row">
               <div className="col mt-5 ms-5 pb-5 pe-4 shadow p-3 mb-5 bg-body rounded">
                 <h3 className="mt-4 text-center" style={{ fontFamily: "Roboto", fontWeight: "700" }}>
-                  LOGIN
+                  SIGN UP
                 </h3>
                 <img src={IconLogin} width={120} className="mt-3 mx-auto d-block" />
                 <form onSubmit={storeChatuser}>

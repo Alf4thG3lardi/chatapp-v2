@@ -6,6 +6,7 @@ import Home from './Pages/Home/home';
 import Register from './Pages/LoginRegister/register';
 import Cookies from 'js-cookie';
 import { ConnectionProvider } from './connection/connection';
+import ListUser from './Pages/Home/chatroom/listuser';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path="/register" element={<Register/>} />
             <Route path='/home' element={Cookies.get('user') ? <Home/>: <Navigate to='/login'/>}></Route>
             <Route path='/home/:room_id' element={Cookies.get('user') ? <Home/>: <Navigate to='/login'/>}></Route>
+            <Route path='/listuser' element={<ListUser/>}></Route>
             <Route path='/' element={<Navigate to='/home'/> }></Route>
           </Routes>
         </Router>
