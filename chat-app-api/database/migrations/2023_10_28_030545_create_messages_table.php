@@ -18,6 +18,8 @@ return new class extends Migration
             $table->bigInteger('chatroom_id')->unsigned();
             $table->foreign('chatroom_id')->references('id')->on('chatrooms')->onUpdate('cascade')->onDelete('cascade');
             $table->text('message');
+            $table->bigInteger('attachment_id')->unsigned()->nullable();
+            $table->foreign('attachment_id')->references('id')->on('attachments')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

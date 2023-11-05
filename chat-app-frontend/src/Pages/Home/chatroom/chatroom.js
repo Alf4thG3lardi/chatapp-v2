@@ -5,12 +5,15 @@ import Connection from "../../../connection/connection";
 import Cookies from "js-cookie";
 
 const Chatroom = () => {
-  const { getChatusers, chatusers, getChatroom, chatroom, getMessages, messages, setMessageForm, storeMessage, messageValue, storeChatroomuser, setChatroomuserForm } = useContext(Connection);
+  const { setFileForm,getChatusers, chatusers, getChatroom, chatroom, getMessages, messages, setMessageForm, storeMessage, messageValue, storeChatroomuser, setChatroomuserForm } = useContext(Connection);
   const user_id = Cookies.get("user");
   const { room_id } = useParams();
   useEffect(() => {
     room_id ? getChatroom(room_id) : <></>;
-    getMessages();
+    // while (room_id) {
+    //   setInterval(getMessages, 5000);
+    // };
+    setInterval(getMessages, 20000);
     getChatusers();
   }, []);
   return (
@@ -65,11 +68,14 @@ const Chatroom = () => {
                   onChange={setMessageForm}
                   value={messageValue["message"]}
                   placeholder="Message"
-                  style={{ marginTop: "30px", width: "960px", borderRadius: "15px" }}
+                  style={{ marginTop: "30px", borderRadius: "15px" }}
                 />
               </div>
               <div className="col-3" style={{ position: "relative", marginTop: "29px", paddingLeft: "60px" }}>
                 <input type="submit" className="btn" value="Submit" style={{ background: "#668DDC", color:'white', borderRadius:'20px'}}/>
+                <span className="btn btn-info">
+                  file <input type="file" onChange={setFileForm}/>
+                </span>
               </div>
             </form>
           </div>

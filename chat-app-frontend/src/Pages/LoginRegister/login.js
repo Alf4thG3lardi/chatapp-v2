@@ -21,7 +21,7 @@ const Login = () => {
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/login", postdata);
       const user = response.data.data.id;
-      Cookies.set("user", user, { sameSite: "strict" });
+      Cookies.set("user", user, { sameSite: "strict" , path: '/'});
       window.location.href = "/";
     } catch (error) {
       console.error("Error:", error);

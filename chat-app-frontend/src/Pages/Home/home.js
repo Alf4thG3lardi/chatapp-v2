@@ -3,12 +3,12 @@ import { useEffect, useContext } from "react";
 import Connection from "../../connection/connection";
 import Cookies from "js-cookie";
 import Chatroom from "./chatroom/chatroom";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logoooo.png";
 // import profil from '../../assets/profilwa.png';
 
 const Home = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const logout = () => {
     Cookies.remove("user");
     window.location.href = "/";
