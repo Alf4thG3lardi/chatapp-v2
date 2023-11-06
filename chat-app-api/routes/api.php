@@ -14,6 +14,7 @@ Route::post('login', [ChatuserController::class, 'login']);
 
 Route::apiResource("chatuser", ChatuserController::class);
 Route::apiResource("chatroom", ChatroomController::class);
+Route::get('status/{id_user}/{id_room}', [AttachmentController::class, 'status'])->name('status');
 Route::apiResource("chatroomuser", ChatroomuserController::class);
 Route::apiResource("message", MessageController::class);
 Route::get('download/{id}', [AttachmentController::class, 'download'])->name('download');

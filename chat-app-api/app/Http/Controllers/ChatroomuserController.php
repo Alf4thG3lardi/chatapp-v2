@@ -31,6 +31,8 @@ class ChatroomuserController extends Controller
         $data = Chatroomuser::create([
             'user_id' => $request->user_id,
             'chatroom_id' => $request->chatroom_id,
+            'banned' => $request->banned,
+            'admin' => $request->admin
         ]);
 
         return response()->json([
@@ -48,6 +50,24 @@ class ChatroomuserController extends Controller
         ]);
     }
 
+    public function status($id_user, $id_room)
+    {
+        $data = DB::table('chatroomusers')
+        ->where('user_id' , '=', $id_user)
+        ->where('chatroom_id', '=', $id_room)
+        ->get();
+
+        if ($data) {
+            return response()->json([
+                'data' => $data
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'not found'
+            ]);
+        }
+
+    }
     /**
      * Update the specified resource in storage.
      */
@@ -55,6 +75,8 @@ class ChatroomuserController extends Controller
     {
         $chatroomuser->user_id = $request->user_id;
         $chatroomuser->chatroom_id = $request->chatroom_id;
+        $chatroomuser->banned = $request->banned;
+        $chatroomuser->admin = $request->admin;
         $chatroomuser->save();
 
         return response()->json([

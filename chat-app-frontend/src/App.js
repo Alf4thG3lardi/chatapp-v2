@@ -13,7 +13,6 @@ function App() {
   return (
     <div className="App">
       <ConnectionProvider>
-        <Router>
           <Routes>
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register/>} />
@@ -22,7 +21,6 @@ function App() {
             <Route path='/listuser' element={<ListUser/>}></Route>
             <Route path='/' element={<Navigate to='/home'/> }></Route>
           </Routes>
-        </Router>
       </ConnectionProvider>
     </div>
   );

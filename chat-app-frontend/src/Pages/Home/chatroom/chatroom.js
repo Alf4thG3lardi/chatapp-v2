@@ -14,7 +14,7 @@ const Chatroom = () => {
     //   setInterval(getMessages, 5000);
     // };
     // blocked()
-    setInterval(getMessages, 10000);
+    setInterval(getMessages, 5000);
     getChatusers();
   }, []);
   return (
@@ -98,9 +98,8 @@ const Chatroom = () => {
                     </div>
                   )
                  })
-            } */}
-
-<div>
+            } */} 
+                    <div>
                       <form className="row mx-auto" onSubmit={storeMessage}>
                         <div className="col-9">
                           <input

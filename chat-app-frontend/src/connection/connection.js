@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 // import { useParams } from "react-router-dom";
 
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 axios.defaults.baseURL = "http://localhost:8000/api";
 const Connection = createContext();
@@ -20,15 +20,23 @@ const chatroomForm = {
 const chatroomuserForm = {
   user_id: "",
   chatroom_id: "",
+  banned: "0",
+  admin: "0"
 };
 
+const messageForm = {
+  user_id: Cookies.get("user"),
+  chatroom_id: "",
+  message: "",
+  attachment_id: ""
+}
 
 const fileForm = {
   filename: ''
 };
 
 export const ConnectionProvider = ({ children }) => {
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   //chatuser section
   const [chatuserValue, setChatuserValue] = useState(userForm);
   const [chatuser, setChatuser] = useState([]);
@@ -81,10 +89,12 @@ export const ConnectionProvider = ({ children }) => {
       const roomdata = response.data.data.id;
       console.log(roomdata);
       autoinputChatroomuser(roomdata);
-      window.location.href = "/home/" + roomdata;
+      navigate('/home/' + roomdata)
     });
+    // window.location.href= 'home/' + room_id
     // console.log(chatroomValue)
     setChatroomValue(chatroomForm);
+    getChatroomusers();
   };
   //chatroomuser section
   const [chatroomuserValue, setChatroomuserValue] = useState(chatroomuserForm);
@@ -100,13 +110,14 @@ export const ConnectionProvider = ({ children }) => {
     setChatroomusers(response.data.data);
   };
 
-  const autoinputChatroomuser = async (room_id) => {
+  const autoinputChatroomuser = async(room_id) => {
     await axios.post("chatroomuser", {
       user_id: Cookies.get("user"),
       chatroom_id: room_id,
+      banned: 0,
+      admin: 1
     });
-    getChatroomusers();
-    window.location.href = room_id;
+    // window.location.href = room_id;
   };
 
   const storeChatroomuser = async (e) => {
@@ -117,12 +128,7 @@ export const ConnectionProvider = ({ children }) => {
   };
   //message section
   // const [fileid, setFileid] = useState('')
-  const [messageValue, setMessageValue] = useState( {
-    user_id: Cookies.get("user"),
-    chatroom_id: "",
-    message: "",
-    attachment_id: ""
-  });
+  const [messageValue, setMessageValue] = useState(messageForm);
   const [messages, setMessages] = useState([]);
   const [fileValue, setFileValue] = useState('');
   const setMessageForm = (e) => {
@@ -164,7 +170,7 @@ export const ConnectionProvider = ({ children }) => {
     // setMessageValue({...messageValue, attachment_id:idfile})
     // console.log(messageValue)
     await axios.post("message", messageValue);
-    setMessageValue(messageValue);
+    setMessageValue(messageForm);
     getMessages();
   };
 
