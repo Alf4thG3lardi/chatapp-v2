@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Blockedfrom;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class BlockedfromController extends Controller
 {

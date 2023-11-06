@@ -26,7 +26,7 @@ class AttachmentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'filename' => 'required|file|mimes:jpg,img,png,bmp,pdf,txt,docx,pptx|max:2048',
+            'filename' => 'required|file|mimes:jpg,img,png,bmp,pdf,txt,docx,pptx',
         ]);
 
         $file = $request->file('filename');

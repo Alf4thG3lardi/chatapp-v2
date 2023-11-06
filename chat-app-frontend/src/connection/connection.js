@@ -22,12 +22,6 @@ const chatroomuserForm = {
   chatroom_id: "",
 };
 
-const messageForm = {
-  user_id: Cookies.get("user"),
-  chatroom_id: "",
-  message: "",
-  attachment_id: ""
-};
 
 const fileForm = {
   filename: ''
@@ -122,18 +116,22 @@ export const ConnectionProvider = ({ children }) => {
     setChatroomuserValue(chatroomuserForm);
   };
   //message section
-  const [messageValue, setMessageValue] = useState(messageForm);
-  const [messages, setMessages] = useState([]);
-  const [fileValue, setFileValue] = useState({
-    file : null
+  // const [fileid, setFileid] = useState('')
+  const [messageValue, setMessageValue] = useState( {
+    user_id: Cookies.get("user"),
+    chatroom_id: "",
+    message: "",
+    attachment_id: ""
   });
+  const [messages, setMessages] = useState([]);
+  const [fileValue, setFileValue] = useState('');
   const setMessageForm = (e) => {
     const { name, value } = e.target;
     setMessageValue({ ...messageValue, [name]: value });
   };
 
   const setFileForm = (e) => {      
-    setFileValue({file : e.target.files[0]}); 
+    setFileValue(e.target.files[0]); 
    }
 
   const getMessages = async () => {
@@ -143,35 +141,39 @@ export const ConnectionProvider = ({ children }) => {
 
   const storeMessage = async (e) => {
     e.preventDefault();
-    // await axios.post("message", messageValue);
+
+    // const formData = new FormData()
+    // formData.append(
+    //     "filename",
+    //     fileValue
+    //   )
+    //   // console.log(formData)
+    //   const idfile = await axios.post("/attachment", formData, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //     },
+    //   }).then((response) => {
+    //     console.log(response.data.data.id)
+    //     setMessageValue({...messageValue,
+    //       attachment_id:response.data.data.id
+    //     })
+    //     // console.log(idfile)
+    //     console.log(messageValue)
+    //   })
     // uploadFile()
-    const formData = new FormData()
-      formData.append(
-        "file",
-        fileValue.file
-      )
-      console.log(fileValue)
-      await axios.post("/attachment", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }).then((response)=>{
-        console.log(response.data.id)
-      })
-    console.log(messageValue)
-    setMessageValue(messageForm);
+    // setMessageValue({...messageValue, attachment_id:idfile})
+    // console.log(messageValue)
+    await axios.post("message", messageValue);
+    setMessageValue(messageValue);
     getMessages();
   };
 
-    //file section
-    
-    const [file, setFile] = useState([])
-
-    
-
-    const uploadFile = async() => {
-      
-    }
+  const [block, setBlock] = useState([])
+  const blocked = async() => {
+    const response = await axios.get("block")
+    setBlock(response.data.data)
+  }
+  // console.log(messageValue)
   return (
     <Connection.Provider
       value={{
@@ -205,18 +207,16 @@ export const ConnectionProvider = ({ children }) => {
         messages,
         setMessages,
         getMessages,
-        messageForm,
         messageValue,
         setChatroomValue,
         setMessageForm,
         storeMessage,
-        file,
-        setFile,
         fileForm,
         fileValue,
         setFileValue,
         setFileForm,
-        uploadFile,
+        blocked,
+        block
       }}
     >
       {children}

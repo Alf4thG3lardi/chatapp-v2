@@ -5,7 +5,7 @@ import Connection from "../../../connection/connection";
 import Cookies from "js-cookie";
 
 const Chatroom = () => {
-  const { setFileForm,getChatusers, chatusers, getChatroom, chatroom, getMessages, messages, setMessageForm, storeMessage, messageValue, storeChatroomuser, setChatroomuserForm } = useContext(Connection);
+  const { blocked ,block ,getChatusers, chatusers, getChatroom, chatroom, getMessages, messages, setMessageForm, storeMessage, messageValue, storeChatroomuser, setChatroomuserForm } = useContext(Connection);
   const user_id = Cookies.get("user");
   const { room_id } = useParams();
   useEffect(() => {
@@ -13,7 +13,8 @@ const Chatroom = () => {
     // while (room_id) {
     //   setInterval(getMessages, 5000);
     // };
-    setInterval(getMessages, 20000);
+    // blocked()
+    setInterval(getMessages, 10000);
     getChatusers();
   }, []);
   return (
@@ -57,28 +58,67 @@ const Chatroom = () => {
               );
             })}
             </div>
+            {/* {
+                 block.map((block) => {
+                  return block.user != user_id && block.chatroom_id != room_id ? (
+                    <div>
+                      <form className="row mx-auto" onSubmit={storeMessage}>
+                        <div className="col-9">
+                          <input
+                            type="text"
+                            className="form-control border border-secondary"
+                            name="message"
+                            onChange={setMessageForm}
+                            value={messageValue["message"]}
+                            placeholder="Message"
+                            style={{ marginTop: "30px", borderRadius: "15px" }}
+                          />
+                        </div>
+                        <div className="col-3" style={{ position: "relative", marginTop: "29px", paddingLeft: "60px" }}>
+                          <input type="submit" className="btn" value="Submit" style={{ background: "#668DDC", color:'white', borderRadius:'20px'}}/>
+                        </div>
+                      </form>
+                  </div>
+                  ) : (
+                    <div>
+                      <form className="row mx-auto">
+                        <div className="col-9">
+                          <input
+                            type="text"
+                            className="form-control border border-secondary"
+                            name="message"
+                            onChange={setMessageForm}
+                            value="you blocked from this rooom"
+                            placeholder="Message"
+                            style={{ marginTop: "30px", borderRadius: "15px" }}
+                            readOnly
+                          />
+                        </div>
+                      </form>
+                    </div>
+                  )
+                 })
+            } */}
 
-          <div>
-            <form className="row mx-auto" onSubmit={storeMessage}>
-              <div className="col-9">
-                <input
-                  type="text"
-                  className="form-control border border-secondary"
-                  name="message"
-                  onChange={setMessageForm}
-                  value={messageValue["message"]}
-                  placeholder="Message"
-                  style={{ marginTop: "30px", borderRadius: "15px" }}
-                />
-              </div>
-              <div className="col-3" style={{ position: "relative", marginTop: "29px", paddingLeft: "60px" }}>
-                <input type="submit" className="btn" value="Submit" style={{ background: "#668DDC", color:'white', borderRadius:'20px'}}/>
-                <span className="btn btn-info">
-                  file <input type="file" onChange={setFileForm}/>
-                </span>
-              </div>
-            </form>
-          </div>
+<div>
+                      <form className="row mx-auto" onSubmit={storeMessage}>
+                        <div className="col-9">
+                          <input
+                            type="text"
+                            className="form-control border border-secondary"
+                            name="message"
+                            onChange={setMessageForm}
+                            value={messageValue["message"]}
+                            placeholder="Message"
+                            style={{ marginTop: "30px", borderRadius: "15px" }}
+                          />
+                        </div>
+                        <div className="col-3" style={{ position: "relative", marginTop: "29px", paddingLeft: "60px" }}>
+                          <input type="submit" className="btn" value="Submit" style={{ background: "#668DDC", color:'white', borderRadius:'20px'}}/>
+                        </div>
+                      </form>
+                  </div>
+          
         </>
       ) : (
         <>
