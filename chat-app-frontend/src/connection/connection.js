@@ -1,7 +1,6 @@
 import { createContext, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-// import { useParams } from "react-router-dom";
 
 import { useNavigate } from 'react-router-dom';
 
@@ -90,8 +89,8 @@ export const ConnectionProvider = ({ children }) => {
       console.log(roomdata);
       autoinputChatroomuser(roomdata);
       navigate('/home/' + roomdata)
-    });
-    // window.location.href= 'home/' + room_id
+     });
+    // window.location.reload(false)
     // console.log(chatroomValue)
     setChatroomValue(chatroomForm);
     getChatroomusers();
@@ -170,14 +169,48 @@ export const ConnectionProvider = ({ children }) => {
     // setMessageValue({...messageValue, attachment_id:idfile})
     // console.log(messageValue)
     await axios.post("message", messageValue);
-    setMessageValue(messageForm);
+    setMessageValue({
+      user_id: messageValue.user_id,
+      chatroom_id: messageValue.chatroom_id,
+      message: "",
+      attachment_id: ""
+    });
     getMessages();
   };
 
-  const [block, setBlock] = useState([])
-  const blocked = async() => {
-    const response = await axios.get("block")
-    setBlock(response.data.data)
+  
+  const [status, setStatus] = useState([])
+
+  const getStatus = async(id_room) => {
+    const response = await axios.get('status/'+Cookies.get("user")+"/"+id_room)
+    const data = response.data.data[0]
+    setStatus(data);
+    console.log(status)
+  }
+
+
+  const banPeople = async(id_user, id_room) => {
+    const response = await axios.get('status/'+id_user+"/"+id_room)
+    const iddata = response.data.data[0].id
+    await axios.put('/chatroomuser/'+iddata, {
+      user_id: id_user,
+      chatroom_id : id_room,
+      banned: 1,
+      admin: 0
+    })
+    console.log(iddata)
+    console.log(id_user, id_room)
+  }
+  const setAdmin = async(id_user, id_room) => {
+    const response = await axios.get('status/'+id_user+"/"+id_room)
+    const iddata = response.data.data[0].id
+    await axios.put('/chatroomuser/'+iddata, {
+      user_id: id_user,
+      chatroom_id : id_room,
+      banned: 0,
+      admin: 1
+    })
+    console.log(id_user, id_room)
   }
   // console.log(messageValue)
   return (
@@ -221,8 +254,11 @@ export const ConnectionProvider = ({ children }) => {
         fileValue,
         setFileValue,
         setFileForm,
-        blocked,
-        block
+        status,
+        setStatus,
+        getStatus,
+        banPeople,
+        setAdmin
       }}
     >
       {children}
