@@ -22,6 +22,12 @@ const chatroomuserForm = {
   chatroom_id: "",
 };
 
+const messageForm = {
+  user_id: Cookies.get("user"),
+  chatroom_id: "",
+  message: "",
+  attachment_id: ""
+}
 
 const fileForm = {
   filename: ''
@@ -117,12 +123,7 @@ export const ConnectionProvider = ({ children }) => {
   };
   //message section
   // const [fileid, setFileid] = useState('')
-  const [messageValue, setMessageValue] = useState( {
-    user_id: Cookies.get("user"),
-    chatroom_id: "",
-    message: "",
-    attachment_id: ""
-  });
+  const [messageValue, setMessageValue] = useState(messageForm);
   const [messages, setMessages] = useState([]);
   const [fileValue, setFileValue] = useState('');
   const setMessageForm = (e) => {
@@ -164,7 +165,7 @@ export const ConnectionProvider = ({ children }) => {
     // setMessageValue({...messageValue, attachment_id:idfile})
     // console.log(messageValue)
     await axios.post("message", messageValue);
-    setMessageValue(messageValue);
+    setMessageValue(messageForm);
     getMessages();
   };
 

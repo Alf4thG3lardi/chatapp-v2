@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect, useContext } from "react";
 import Connection from "../../connection/connection";
 import { Navigate } from "react-router-dom";
@@ -6,6 +6,8 @@ import IconLogin from "../../assets/iconlogin.png";
 import IconTelepon from "../../assets/telepooon.png";
 import "./register.css";
 import logo from "../../assets/logoooo.png";
+import ReCAPTCHA from 'react-google-recaptcha';
+
 
 const Register = () => {
   const { setChatuserForm, storeChatuser, chatuserValue } = useContext(Connection);
@@ -15,6 +17,11 @@ const Register = () => {
   };
 
   useEffect(() => {}, []);
+
+  const [recaptchaValue, setRecaptchaValue] = useState(null);
+  const onChange = (value) => {
+        setRecaptchaValue(value);
+  };
   return (
     <div className="screen" style={{ paddingTop: "70px", paddingBottom: "130px" }}>
       <div>
@@ -37,7 +44,9 @@ const Register = () => {
                 <img src={IconLogin} width={120} className="mt-3 mx-auto d-block" />
                 <form onSubmit={storeChatuser}>
                   <input required className="mt-3 form-control" onChange={setChatuserForm} value={chatuserValue["username"]} type="text" name="username" id="name" placeholder="Username"/>
-                  <input required className="mt-2 form-control" onChange={setChatuserForm} value={chatuserValue["password"]} type="text" name="password" id="password" placeholder="Password"/>
+                  <input required className="mt-2 form-control" onChange={setChatuserForm} value={chatuserValue["password"]} type="password" name="password" id="password" placeholder="Password"/>
+
+                  <ReCAPTCHA sitekey="6LeC4vsoAAAAAClbqn87RBaMHRokUJ3ANNMJvJyv" onChange={onChange}/>
                   
                   <input type="submit" className="mt-3 btn btn-primary" value="Submit" />
                 </form>

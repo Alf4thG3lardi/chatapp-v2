@@ -7,6 +7,7 @@ import IconLogin from "../../assets/iconlogin.png";
 import IconTelepon from "../../assets/telepooon.png";
 import "./login.css";
 import logo from "../../assets/logoooo.png";
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const Login = () => {
   const [postdata, setPostdata] = useState({
@@ -15,6 +16,11 @@ const Login = () => {
   });
 
   const navigate = useNavigate();
+
+  const [recaptchaValue, setRecaptchaValue] = useState(null);
+  const onChange = (value) => {
+        setRecaptchaValue(value);
+  };
 
   const loginuser = async (e) => {
     e.preventDefault();
@@ -47,7 +53,7 @@ const Login = () => {
         <div className="row mx-auto justify-content-center pb-5">
           <div className="col-6 border border-white bg-white shadow-lg p-3 mb-5 bg-body rounded" style={{ borderRadius: "17px" }}>
             <div className="row">
-              <div className="col mt-5 ms-5 pb-5 pe-4 shadow p-3 mb-5 bg-body rounded">
+              <div className="col shadow p-3 mb-1 bg-body rounded">
                 <h3 className="mt-4 text-center" style={{ fontFamily: "Roboto", fontWeight: "700" }}>
                   LOGIN
                 </h3>
@@ -64,6 +70,9 @@ const Login = () => {
                     id="password"
                     placeholder="Password"
                   />
+
+                        <ReCAPTCHA sitekey="6LeC4vsoAAAAAClbqn87RBaMHRokUJ3ANNMJvJyv" onChange={onChange}/>
+
                   <button type="submit" className="mt-3 btn btn-primary">
                     Submit
                   </button>
@@ -76,7 +85,7 @@ const Login = () => {
             </div>
             <div className="mt-1 mb-4 text-center" style={{ fontFamily: "Poppins" }}>
               <p>
-                Already a member?{" "}
+                Haven't account?{" "}
                 <a className="text-primary" onClick={toregister} style={{ textDecoration: "none", cursor:'pointer'}}>
                   Sign Up
                 </a>{" "}
