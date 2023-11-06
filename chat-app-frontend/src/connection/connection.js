@@ -124,11 +124,17 @@ export const ConnectionProvider = ({ children }) => {
   //message section
   const [messageValue, setMessageValue] = useState(messageForm);
   const [messages, setMessages] = useState([]);
-
+  const [fileValue, setFileValue] = useState({
+    file : null
+  });
   const setMessageForm = (e) => {
     const { name, value } = e.target;
     setMessageValue({ ...messageValue, [name]: value });
   };
+
+  const setFileForm = (e) => {      
+    setFileValue({file : e.target.files[0]}); 
+   }
 
   const getMessages = async () => {
     const response = await axios.get("message");
@@ -138,25 +144,33 @@ export const ConnectionProvider = ({ children }) => {
   const storeMessage = async (e) => {
     e.preventDefault();
     // await axios.post("message", messageValue);
-    uploadFile()
+    // uploadFile()
+    const formData = new FormData()
+      formData.append(
+        "file",
+        fileValue.file
+      )
+      console.log(fileValue)
+      await axios.post("/attachment", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }).then((response)=>{
+        console.log(response.data.id)
+      })
     console.log(messageValue)
     setMessageValue(messageForm);
     getMessages();
   };
 
     //file section
-    const [fileValue, setFileValue] = useState(fileForm);
+    
     const [file, setFile] = useState([])
 
-    const setFileForm = (e) => {
-      const {name, value} = e.target;
-      
-      setFileValue({...fileValue, [name] : value});
-    }
+    
 
     const uploadFile = async() => {
-      console.log(fileValue)
-      setFileValue(fileForm)
+      
     }
   return (
     <Connection.Provider

@@ -26,7 +26,9 @@ class ChatuserController extends Controller
 
         $data = Chatuser::create([
             'username' => $request->username,
-            'password' => base64_encode($request->password)
+            'password' => base64_encode($request->password),
+            'isAdmin' => 0,
+            'isBanned' => 0
         ]);
 
         return response()->json([
@@ -81,6 +83,9 @@ class ChatuserController extends Controller
     {
         $chatuser->username = $request->username;
         $chatuser->password = $request->password;
+        $chatuser->isAdmin = $request->isAdmin;
+        $chatuser->isBanned = $request->isBanned;
+
         $chatuser->save();
 
         return response()->json([
