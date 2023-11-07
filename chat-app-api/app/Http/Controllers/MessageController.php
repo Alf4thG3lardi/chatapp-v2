@@ -19,6 +19,7 @@ class MessageController extends Controller
         ->select('messages.*', 'chatusers.username')
         ->orderBy('created_at', 'asc')
         ->get();
+        
         return response()->json([
             'data' => $data
         ]);
@@ -32,7 +33,7 @@ class MessageController extends Controller
         $data = Message::create([
             'user_id' => $request->user_id,
             'chatroom_id' => $request->chatroom_id,
-            'message' => $request->message
+            'message' => base64_encode($request->message)
         ]);
 
         return response()->json([
@@ -57,7 +58,7 @@ class MessageController extends Controller
     {
         $message->user_id = $request->user_id;
         $message->chatroom_id = $request->chatroom_id;
-        $message->message = $request->message;
+        $message->message = base64_encode($request->message);
         $message->save();
 
         return response()->json([

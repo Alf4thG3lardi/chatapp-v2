@@ -55,7 +55,7 @@ class ChatroomuserController extends Controller
         $data = DB::table('chatroomusers')
         ->where('user_id' , '=', $id_user)
         ->where('chatroom_id', '=', $id_room)
-        ->get();
+        ->first();
 
         if ($data) {
             return response()->json([

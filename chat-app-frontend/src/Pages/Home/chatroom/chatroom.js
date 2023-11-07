@@ -6,21 +6,18 @@ import Cookies from "js-cookie";
 import axios from "axios";
 
 const Chatroom = () => {
-  const {  getStatus, status, getChatusers, chatusers, getChatroom, chatroom, getMessages, messages, setMessageForm, storeMessage, messageValue, storeChatroomuser, setChatroomuserForm } = useContext(Connection);
+  const {  status, getStatus, getChatusers, chatusers, getChatroom, chatroom, getMessages, messages, setMessageForm, storeMessage, messageValue, storeChatroomuser, setChatroomuserForm } = useContext(Connection);
   const user_id = Cookies.get("user");
   const { room_id } = useParams();
 
+
   useEffect(() => {
-    room_id ? getChatroom(room_id): <></>;
-    getStatus(room_id)
-    console.log(status)
-    getChatusers();
-    // while (room_id) {
-    //   setInterval(getMessages, 5000);
-    // };
-    // blocked()
-    setInterval(getMessages, 5000);
-    
+    if (room_id ? getChatroom(room_id): <></>) {
+      console.log(status)
+      getChatusers();
+      getStatus(room_id, user_id)
+      setInterval(getMessages, 5000);
+    }
   }, []);
   return (
     <div style={{ background: "#DBDDFF", minHeight: "80vh"}}>
@@ -32,7 +29,7 @@ const Chatroom = () => {
           <a href={`/listuser/${room_id}`}>
             list user
           </a>
-          {
+          {/* {
             status.admin ? <form className="mx-auto d-flex justify-content-start" onSubmit={storeChatroomuser} style={{ width: "500px", marginBottom: "40px" }}>
             <select className="form-select" name="user_id" onChange={setChatroomuserForm}>
               <option selected>Open this select user</option>
@@ -44,7 +41,18 @@ const Chatroom = () => {
               Submit
             </button>
           </form> : <div></div>
-          }
+          } */}
+          <form className="mx-auto d-flex justify-content-start" onSubmit={storeChatroomuser} style={{ width: "500px", marginBottom: "40px" }}>
+            <select className="form-select" name="user_id" onChange={setChatroomuserForm}>
+              <option selected>Open this select user</option>
+              {chatusers.map((chatuser) => {
+                return <option value={chatuser.id}>{chatuser.username}</option>;
+              })}
+            </select>
+            <button type="submit" className="ms-2 btn btn-primary float-right">
+              Submit
+            </button>
+          </form>
             <div className="overflow-y-auto overflow-x-hidden" style={{ maxHeight: "50vh" }}>
             {messages
             .filter((messages) => messages.chatroom_id == room_id)
@@ -68,7 +76,25 @@ const Chatroom = () => {
               );
             })}
             </div>
-            {
+            <div>
+                <form className="row mx-auto" onSubmit={storeMessage}>
+                  <div className="col-9">
+                    <input
+                      type="text"
+                      className="form-control border border-secondary"
+                      name="message"
+                      onChange={setMessageForm}
+                      value={messageValue["message"]}
+                      placeholder="Message"
+                      style={{ marginTop: "30px", borderRadius: "15px" }}
+                    />
+                  </div>
+                  <div className="col-3" style={{ position: "relative", marginTop: "29px", paddingLeft: "60px" }}>
+                    <input type="submit" className="btn" value="Submit" style={{ background: "#668DDC", color:'white', borderRadius:'20px'}}/>
+                  </div>
+                </form>
+              </div>
+            {/* {
               status.banned != 1 ? 
               <div>
                 <form className="row mx-auto" onSubmit={storeMessage}>
@@ -105,7 +131,7 @@ const Chatroom = () => {
                   </div>
                 </form>
               </div>
-                }
+                } */}
         </>
       ) : (
         <>

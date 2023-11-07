@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('chatusers', function (Blueprint $table) {
             $table->id();
             $table->string('username');
+            $table->string('name');
             $table->string('password');
+            $table->string('email');
+            $table->bigInteger('phone');
             $table->timestamps();
         });
     }

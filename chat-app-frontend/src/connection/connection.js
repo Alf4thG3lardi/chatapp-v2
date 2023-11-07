@@ -180,15 +180,34 @@ export const ConnectionProvider = ({ children }) => {
   };
 
   
-  const [status, setStatus] = useState([])
+  const [status, setStatus] = useState('');
+const [chatroomuser, setChatroomuser] = useState({
+  user_id: "",
+  chatroom_id: "",
+  banned: "",
+  admin: ""
+});
 
-  const getStatus = async(id_room) => {
-    const response = await axios.get('status/'+Cookies.get("user")+"/"+id_room)
-    const data = response.data.data[0]
-    setStatus(data);
-    console.log(status)
+const getStatus = async (id_room, id_user) => {
+  try {
+    const response = await axios.get('status/' + id_user + '/' + id_room);
+    console.log(response.data.data.id);
+    await getChatroomuser(response.data.data.id);
+  } catch (error) {
+    // Handle any errors here
   }
-
+};
+     
+const getChatroomuser = async (id) => {
+  try {
+    const response = await axios.get('chatroomuser/' + id);
+    console.log(response.data.data);
+    setChatroomuser(response.data.data);
+    console.log(chatroomuser);
+  } catch (error) {
+    // Handle any errors here
+  }
+};
 
   const banPeople = async(id_user, id_room) => {
     const response = await axios.get('status/'+id_user+"/"+id_room)

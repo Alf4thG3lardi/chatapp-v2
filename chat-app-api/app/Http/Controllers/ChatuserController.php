@@ -24,9 +24,20 @@ class ChatuserController extends Controller
     public function store(Request $request)
     {
 
+        $validated = $request->validate([
+            'username' => ['required', 'unique:chatusers,username'],
+            'name' => ['required'],
+            'password' => ['required'],
+            'email' => ['required', 'email', 'regex:/(.+)@(.+)\.(.+)/i', 'unique:chatusers,email'],
+            'phone' => ['required', 'digits_between:0,9', 'numeric', 'min:8']
+        ]);
+        
         $data = Chatuser::create([
             'username' => $request->username,
+            'name' => $request->name,
             'password' => base64_encode($request->password),
+            'email' => $request->email,
+            'phone' => $request->phone
         ]);
 
         return response()->json([
@@ -79,9 +90,19 @@ class ChatuserController extends Controller
      */
     public function update(Request $request, Chatuser $chatuser)
     {
+        $validated = $request->validate([
+            'username' => ['required', 'unique:chatusers,username', ],
+            'name' => ['require'],
+            'password' => ['required'],
+            'email' => ['required', 'email', 'regex:/(.+)@(.+)\.(.+)/i', 'unique:chatusers,email'],
+            'phone' => ['required', 'digits_between:0,9', 'numeric', 'min:8']
+        ]);
+        
         $chatuser->username = $request->username;
-        $chatuser->password = $request->password;
-
+        $chatuser->name = $request->name;
+        $chatuser->password = base64_encode($request->password);
+        $chatuser->email = $request->email;
+        $chatuser->phone = $request->phone;
         $chatuser->save();
 
         return response()->json([
