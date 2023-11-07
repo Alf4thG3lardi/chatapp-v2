@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('chatusers')->onUpdate('cascade')->onDelete('cascade');
             $table->bigInteger('chatroom_id')->unsigned();
             $table->foreign('chatroom_id')->references('id')->on('chatrooms')->onUpdate('cascade')->onDelete('cascade');
+            $table->boolean('banned');
+            $table->boolean('admin');
             $table->timestamps();
         });
     }

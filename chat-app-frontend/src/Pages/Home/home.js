@@ -49,7 +49,7 @@ const Home = () => {
           <form onSubmit={storeChatroom}>
             <div>
               <div className="row mt-3 mb-3 ms-3">
-                <input type="text" name="name" className="col-10 form-control" placeholder="Chatroom" style={{ width: "270px" }} onChange={setChatroomForm} value={chatroomValue["name"]} />
+                <input required type="text" name="name" className="col-10 form-control" placeholder="Chatroom" style={{ width: "270px" }} onChange={setChatroomForm} value={chatroomValue["name"]} />
                 <button type="submit" className="col-2 ms-2 btn btn-outline-secondary" style={{ borderRadius: "17px" }}>
                   Make
                 </button>

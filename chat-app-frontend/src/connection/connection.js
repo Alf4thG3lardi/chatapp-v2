@@ -1,9 +1,8 @@
 import { createContext, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-// import { useParams } from "react-router-dom";
 
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 axios.defaults.baseURL = "http://localhost:8000/api";
 const Connection = createContext();
@@ -20,6 +19,8 @@ const chatroomForm = {
 const chatroomuserForm = {
   user_id: "",
   chatroom_id: "",
+  banned: "0",
+  admin: "0"
 };
 
 const messageForm = {
@@ -34,7 +35,7 @@ const fileForm = {
 };
 
 export const ConnectionProvider = ({ children }) => {
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   //chatuser section
   const [chatuserValue, setChatuserValue] = useState(userForm);
   const [chatuser, setChatuser] = useState([]);
@@ -87,10 +88,12 @@ export const ConnectionProvider = ({ children }) => {
       const roomdata = response.data.data.id;
       console.log(roomdata);
       autoinputChatroomuser(roomdata);
-      window.location.href = "/home/" + roomdata;
-    });
+      navigate('/home/' + roomdata)
+     });
+    // window.location.reload(false)
     // console.log(chatroomValue)
     setChatroomValue(chatroomForm);
+    getChatroomusers();
   };
   //chatroomuser section
   const [chatroomuserValue, setChatroomuserValue] = useState(chatroomuserForm);
@@ -106,13 +109,14 @@ export const ConnectionProvider = ({ children }) => {
     setChatroomusers(response.data.data);
   };
 
-  const autoinputChatroomuser = async (room_id) => {
+  const autoinputChatroomuser = async(room_id) => {
     await axios.post("chatroomuser", {
       user_id: Cookies.get("user"),
       chatroom_id: room_id,
+      banned: 0,
+      admin: 1
     });
-    getChatroomusers();
-    window.location.href = room_id;
+    // window.location.href = room_id;
   };
 
   const storeChatroomuser = async (e) => {
@@ -166,13 +170,48 @@ export const ConnectionProvider = ({ children }) => {
     // console.log(messageValue)
     await axios.post("message", messageValue);
     setMessageValue(messageForm);
+    setMessageValue({
+      user_id: messageValue.user_id,
+      chatroom_id: messageValue.chatroom_id,
+      message: "",
+      attachment_id: ""
+    });
     getMessages();
   };
 
-  const [block, setBlock] = useState([])
-  const blocked = async() => {
-    const response = await axios.get("block")
-    setBlock(response.data.data)
+  
+  const [status, setStatus] = useState([])
+
+  const getStatus = async(id_room) => {
+    const response = await axios.get('status/'+Cookies.get("user")+"/"+id_room)
+    const data = response.data.data[0]
+    setStatus(data);
+    console.log(status)
+  }
+
+
+  const banPeople = async(id_user, id_room) => {
+    const response = await axios.get('status/'+id_user+"/"+id_room)
+    const iddata = response.data.data[0].id
+    await axios.put('/chatroomuser/'+iddata, {
+      user_id: id_user,
+      chatroom_id : id_room,
+      banned: 1,
+      admin: 0
+    })
+    console.log(iddata)
+    console.log(id_user, id_room)
+  }
+  const setAdmin = async(id_user, id_room) => {
+    const response = await axios.get('status/'+id_user+"/"+id_room)
+    const iddata = response.data.data[0].id
+    await axios.put('/chatroomuser/'+iddata, {
+      user_id: id_user,
+      chatroom_id : id_room,
+      banned: 0,
+      admin: 1
+    })
+    console.log(id_user, id_room)
   }
   // console.log(messageValue)
   return (
@@ -216,8 +255,11 @@ export const ConnectionProvider = ({ children }) => {
         fileValue,
         setFileValue,
         setFileForm,
-        blocked,
-        block
+        status,
+        setStatus,
+        getStatus,
+        banPeople,
+        setAdmin
       }}
     >
       {children}

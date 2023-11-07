@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '0ca962ca248beeb854a7b042600125d9a5cb2d0e',
+        'reference' => 'be8bb2ed0f8c01338a1b7058c87b0cc6f603ebc3',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -86,12 +86,12 @@
             'dev_requirement' => true,
         ),
         'filp/whoops' => array(
-            'pretty_version' => '2.15.3',
-            'version' => '2.15.3.0',
+            'pretty_version' => '2.15.4',
+            'version' => '2.15.4.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../filp/whoops',
             'aliases' => array(),
-            'reference' => 'c83e88a30524f9360b11f585f71e6b17313b7187',
+            'reference' => 'a139776fa3f5985a50b509f2a02ff0f709d2a546',
             'dev_requirement' => true,
         ),
         'fruitcake/php-cors' => array(
@@ -376,7 +376,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '0ca962ca248beeb854a7b042600125d9a5cb2d0e',
+            'reference' => 'be8bb2ed0f8c01338a1b7058c87b0cc6f603ebc3',
             'dev_requirement' => false,
         ),
         'laravel/pint' => array(
@@ -766,8 +766,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '3.0.0',
+                0 => '3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache' => array(
